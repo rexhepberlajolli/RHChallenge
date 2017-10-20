@@ -103,3 +103,5 @@ AUTHENTICATION_BACKENDS = (
 
 # Usage on templates {% url 'social:...' %}
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+LOGIN_URL = '/login'
