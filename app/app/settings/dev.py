@@ -53,3 +53,9 @@ LOGGING = {
         }
     }
 }
+
+
+# Google O Auth KEYS
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '643543659972-76ru1rbm452h1028j2lndr3ua7b4amhq.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'i9-lKPxAox6i-iXlMpPKm8HJ'
