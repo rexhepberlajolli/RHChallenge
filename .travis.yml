@@ -1,0 +1,5 @@
+sudo: required
+language: python
+python: 3.6
+services: docker
+script: docker-compose run rh-web python -u /app/UserAdministration/manage.py test
