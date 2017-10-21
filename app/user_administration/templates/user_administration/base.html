@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>User Administration</title>
+        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/css/bootstrap-notify.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/css/bootstrap-notify.min.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand" href="{% url 'UserAdministration:ClientListView' %}">User Administration</a>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'UserAdministration:LogoutPage' %}">Logout</a>
+                  </li>
+            </div>
+          </div>
+        </nav>
+        {% block body %}
+
+        {% endblock body %}
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/bootstrap-notify.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/bootstrap-notify.min.js' %}"></script>
+
+        {% if messages %}
+            <script>
+                {% for message in messages %}
+                    $.notify({
+                        icon: "fa fa-bell-o",
+                        message: "{{ message }}"
+
+                        }, {
+                        type: '{{ message.tags }}',
+                        timer: 3000,
+                        placement: {
+                            from: 'top',
+                            align: 'center'
+                        },
+                        animate: {
+                            enter: 'animated fadeInLeft',
+                            exit: 'animated fadeOutRight'
+                        }
+                    });
+                {% endfor %}
+            </script>
+        {% endif %}
+
+
+        {% block scripts %}
+
+        {% endblock scripts %}
+    </body>
+</html>
