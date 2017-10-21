@@ -28,9 +28,9 @@ class LoginSetup(TestCase):
         self.client.force_login(self.user)
 
 
-class ClientsViewTest(LoginSetup):
+class ClientListViewTest(LoginSetup):
     def setUp(self):
-        super(ClientsViewTest, self).setUp()
+        super(ClientListViewTest, self).setUp()
         self.custom_client = Clients.objects.create(first_name='RH', last_name='CH', iban='IBAN')
 
     def test_client_create(self):
@@ -60,4 +60,20 @@ class ClientsViewTest(LoginSetup):
             list(clients),
             list(Clients.objects.all()),
             msg="Get clients failed, received clients {0} instead of {1}".format(clients, [self.custom_client])
+        )
+
+
+class ClientDetailViewTest(LoginSetup):
+    def setUp(self):
+        super(ClientDetailViewTest, self).setUp()
+        self.custom_client = Clients.objects.create(first_name='RH', last_name='CH', iban='IBAN')
+
+    def test_get_client_details(self):
+        response = self.client.get('/clients/{0}'.format(self.custom_client.pk), follow=True)
+        client = response.context_data['client']
+        self.assertEqual(
+            client.first_name,
+            self.custom_client.first_name,
+            msg="Get client details failed, received client name {0} instead of {1}"
+                .format(client.first_name, self.custom_client.first_name)
         )
