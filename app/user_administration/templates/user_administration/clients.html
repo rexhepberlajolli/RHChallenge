@@ -1,0 +1,84 @@
+{% extends 'user_administration/base.html' %}
+
+{% block body %}
+    <div class="container">
+        <br>
+        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">Add User</button>
+        <br>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>iBan</th>
+              <th>Country</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for client in clients %}
+              <tr>
+              <th scope="row">{{ client.id }}</th>
+              <td>{{ client.first_name }}</td>
+              <td>{{ client.last_name }}</td>
+              <td>{{ client.iban }}</td>
+              <td>{{ client.country }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        {% if is_paginated %}
+            <nav aria-label="...">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="/?page={{ page_obj.previous_page_number }}">Previous</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Previous</a>
+                        </li>
+                    {% endif %}
+                        <li class="page-item active">
+                            <a class="page-link" href="#">{{ page_obj.number }}</a>
+                        </li>
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="/?page={{ page_obj.next_page_number }}">Next</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+            <form method="post" action="/add">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    {{ create_form }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save User</button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+{% endblock body %}
+
+{% block scripts %}
+
+{% endblock scripts %}
