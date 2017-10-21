@@ -3,7 +3,7 @@
 {% block body %}
     <div class="container">
         <br>
-        <a href="#" class="btn btn-primary btn-block">Edit User</a>
+        <a href="{% url 'UserAdministration:ClientUpdateView' client.pk %}" class="btn btn-primary btn-block">Edit User</a>
         <br>
         <h2><b>First Name: </b> {{ client.first_name }}</h2>
         <hr>
