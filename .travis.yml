@@ -4,4 +4,4 @@ python: 3.6
 services: docker
 script:
   - docker-compose run web coverage run ./manage.py test user_administration
-  - docker-compose run web coverage report -m
+  - docker-compose run web coverage report
