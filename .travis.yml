@@ -2,6 +2,4 @@ sudo: required
 language: python
 python: 3.6
 services: docker
-script:
-  - docker-compose run web coverage run ./manage.py test user_administration
-  - docker-compose run web coverage report
+script: docker-compose run web bash -c "coverage run ./manage.py test && coverage report"
