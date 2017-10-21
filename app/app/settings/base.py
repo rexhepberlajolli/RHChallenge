@@ -1,6 +1,8 @@
 # Settings for app project. using Django 1.11.6.
 
 import os
+from django.contrib.messages import constants as message_constants
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -105,3 +107,12 @@ AUTHENTICATION_BACKENDS = (
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 LOGIN_URL = '/login'
+
+MESSAGE_TAGS = {
+    message_constants.INFO: 'info',
+    message_constants.SUCCESS: 'success',
+    message_constants.WARNING: 'warning',
+    message_constants.ERROR: 'danger',
+}
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
