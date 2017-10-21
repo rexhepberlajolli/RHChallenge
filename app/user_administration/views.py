@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.views.generic import TemplateView, CreateView, ListView, DetailView
+from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
 import logging
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -59,3 +59,30 @@ class ClientDetailView(DetailView):
     model = Clients
     template_name = 'user_administration/client_detail.html'
     context_object_name = 'client'
+
+
+@method_decorator(login_required, name='dispatch')
+class ClientUpdateView(UpdateView):
+    model = Clients
+    form_class = ClientsForm
+    context_object_name = 'client'
+    template_name = 'user_administration/client_update.html'
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        if obj.createdBy == self.request.user:
+            messages.add_message(self.request, messages.SUCCESS, "Client Data Updated Successfully")
+        else:
+            messages.add_message(self.request, messages.ERROR, "You Can Not Update This Client's Data")
+        return super(ClientUpdateView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        errors = json.loads(form.errors.as_json())
+        for error in errors:
+            for message in errors[error]:
+                messages.add_message(self.request, messages.ERROR, message['message'])
+        return super(ClientUpdateView, self).form_invalid(form)
+
+    def get_success_url(self, **kwargs):
+        pk = self.kwargs['pk']
+        return reverse_lazy('UserAdministration:ClientUpdateView', kwargs={'pk': pk})
