@@ -75,6 +75,7 @@ class ClientUpdateView(UpdateView):
             messages.add_message(self.request, messages.SUCCESS, "Client Data Updated Successfully")
         else:
             messages.add_message(self.request, messages.ERROR, "You Can Not Update This Client's Data")
+            return self.form_invalid(form)
         return super(ClientUpdateView, self).form_valid(form)
 
     def form_invalid(self, form):
