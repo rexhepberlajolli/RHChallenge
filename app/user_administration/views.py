@@ -26,6 +26,9 @@ class ClientCreateView(CreateView):
     success_url = reverse_lazy('UserAdministration:ClientListView')
 
     def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.createdBy = self.request.user
+        obj.save()
         messages.add_message(self.request, messages.SUCCESS, "Client Created Successfully")
         return super(ClientCreateView, self).form_valid(form)
 
