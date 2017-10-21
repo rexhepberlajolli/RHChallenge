@@ -1,0 +1,13 @@
+{% extends 'user_administration/base.html' %}
+
+{% block body %}
+    <div class="container">
+        <br>
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ form }}
+            <br>
+            <button type="submit" class="btn btn-info btn-block">Update </button>
+        </form>
+    </div>
+{% endblock body %}
