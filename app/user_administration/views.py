@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.views.generic import TemplateView, CreateView, ListView
+from django.views.generic import TemplateView, CreateView, ListView, DetailView
 import logging
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -52,3 +52,10 @@ class ClientListView(ListView):
         context = super(ClientListView, self).get_context_data(**kwargs)
         context['create_form'] = ClientsForm()
         return context
+
+
+@method_decorator(login_required, name='dispatch')
+class ClientDetailView(DetailView):
+    model = Clients
+    template_name = 'user_administration/client_detail.html'
+    context_object_name = 'client'
