@@ -1,0 +1,18 @@
+{% extends 'user_administration/base.html' %}
+
+{% block body %}
+    <div class="container">
+        <br>
+        <a href="#" class="btn btn-primary btn-block">Edit User</a>
+        <br>
+        <h2><b>First Name: </b> {{ client.first_name }}</h2>
+        <hr>
+        <h2><b>Last Name: </b> {{ client.last_name }}</h2>
+        <hr>
+        <h2><b>IBAN: </b> {{ client.iban }}</h2>
+        <hr>
+        <h2><b>Country: </b> {{ client.country }}</h2>
+        <hr>
+        <h2><b>Created Time: </b> {{ client.createdTime }}</h2>
+    </div>
+{% endblock body %}
