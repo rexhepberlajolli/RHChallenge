@@ -14,5 +14,11 @@
         <h2><b>Country: </b> {{ client.country }}</h2>
         <hr>
         <h2><b>Created Time: </b> {{ client.createdTime }}</h2>
+        <br>
+        <form method="post" action="{% url 'UserAdministration:ClientDeleteView' client.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-block">Delete User</button>
+        </form>
+        <br>
     </div>
 {% endblock body %}
