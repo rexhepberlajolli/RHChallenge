@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
+from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 import logging
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -10,6 +10,7 @@ import json
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
+from django.http.response import HttpResponseNotAllowed, HttpResponseForbidden
 
 
 logger = logging.getLogger(__name__)
@@ -86,3 +87,20 @@ class ClientUpdateView(UpdateView):
     def get_success_url(self, **kwargs):
         pk = self.kwargs['pk']
         return reverse_lazy('UserAdministration:ClientUpdateView', kwargs={'pk': pk})
+
+
+class ClientDeleteView(DeleteView):
+    model = Clients
+    success_url = reverse_lazy('UserAdministration:ClientListView')
+
+    def delete(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.createdBy != self.request.user:
+            messages.add_message(self.request, messages.ERROR, "You do not have access to remove this client")
+            return redirect(reverse_lazy('UserAdministration:ClientDetailView', kwargs={'pk': obj.pk}))
+        messages.add_message(self.request, messages.SUCCESS, "Client Removed Successfully")
+        return super(ClientDeleteView, self).delete(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponseNotAllowed("GET")
+
