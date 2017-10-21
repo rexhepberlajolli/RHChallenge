@@ -137,3 +137,29 @@ class ClientUpdateViewTest(LoginSetup):
             msg="Updating a forbidden user succeeded, received iban {0} instead of {1}"
                 .format(second_client.iban, self.second_c.iban)
         )
+
+
+class ClientDeleteViewTest(LoginSetup):
+    def setUp(self):
+        super(ClientDeleteViewTest, self).setUp()
+        self.first_c = Clients.objects.create(first_name='RH', last_name='CH', iban='IBAN')
+
+    def test_delete_client(self):
+        self.first_c.createdBy = self.user
+        self.first_c.save()
+        self.client.post('/clients/{0}/delete'.format(self.first_c.pk))
+        clients = Clients.objects.all()
+        self.assertEqual(
+            clients.count(),
+            0,
+            msg="Delete client failed, received {0} instead of {1} clients".format(clients.count(), 0)
+        )
+
+    def test_forbidden_delete_client(self):
+        self.client.post('/clients/{0}/delete'.format(self.first_c.pk))
+        clients = Clients.objects.all()
+        self.assertEqual(
+            clients.count(),
+            1,
+            msg="Delete forbidden client succeeded, received {0} instead of {1} clients".format(clients.count(), 1)
+        )
