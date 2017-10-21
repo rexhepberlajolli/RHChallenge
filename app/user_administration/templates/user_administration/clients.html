@@ -13,6 +13,7 @@
               <th>Last Name</th>
               <th>iBan</th>
               <th>Country</th>
+              <th>View</th>
             </tr>
           </thead>
           <tbody>
@@ -23,6 +24,7 @@
               <td>{{ client.last_name }}</td>
               <td>{{ client.iban }}</td>
               <td>{{ client.country }}</td>
+              <td><a href="{% url 'UserAdministration:ClientDetailView' client.pk %}">View</a> </td>
             </tr>
           {% endfor %}
           </tbody>
